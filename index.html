@@ -3,232 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>薪资管理系统-移动优化版</title>
+    <title>薪资助手App</title>
     <style>
         :root {
             --primary: #2563eb;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text: #1e293b;
+            --danger: #ef4444;
+            --success: #10b981;
+            --bg: #f3f4f6;
+            --card: #ffffff;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body { 
-            font-family: -apple-system, system-ui, sans-serif; 
-            background-color: var(--bg); 
-            color: var(--text); 
-            margin: 0; 
-            padding: 12px;
-            line-height: 1.5;
-        }
-
-        .container { max-width: 100%; margin: 0 auto; }
-
-        /* 顶部标题优化 */
-        .salary-date-header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-            color: white; text-align: center; padding: 18px 10px; 
-            border-radius: 12px; margin-bottom: 15px;
-        }
-        .salary-date-header h1 { margin: 0; font-size: 1.25rem; }
-        .salary-date-header p { margin: 5px 0 0; font-size: 0.85rem; opacity: 0.9; }
-
-        .card { 
-            background: var(--card-bg); 
-            border-radius: 12px; 
-            padding: 16px; 
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .section-title { 
-            font-size: 1rem; font-weight: bold; margin-bottom: 15px; 
-            color: var(--primary); border-left: 4px solid var(--primary); padding-left: 8px; 
-        }
-
-        /* 录入表单：手机端单列排布 */
-        .form-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; /* 手机端每行两个 */
-            gap: 12px; 
-        }
-        .form-group.full-width { grid-column: span 2; } /* 姓名占满整行 */
-
-        label { font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 4px; display: block; }
-        input { 
-            width: 100%; padding: 12px; 
-            border: 1.5px solid #e2e8f0; border-radius: 8px; 
-            font-size: 16px; /* 16px 防止 iOS 自动放大页面 */
-            outline: none; background: #fff;
-        }
-        input:focus { border-color: var(--primary); }
-
-        /* 预览条：吸附感设计 */
-        .summary-bar { 
-            margin-top: 15px; padding: 15px; background: #eff6ff; 
-            border-radius: 10px; text-align: center; 
-            font-size: 1.3rem; font-weight: bold; color: var(--primary);
-            border: 2px solid #dbeafe;
-        }
-
-        .actions { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-        button { 
-            width: 100%; padding: 15px; border: none; border-radius: 10px; 
-            font-size: 16px; font-weight: bold; cursor: pointer; color: white;
-        }
-        .btn-add { background: var(--primary); }
-        .btn-export { background: #059669; }
-
-        /* 表格：手机端彻底转为卡片模式 */
-        .table-container { width: 100%; }
-        table { width: 100%; border-collapse: collapse; }
-        .table-main-title { display: none; } /* 手机端隐藏大标题 */
         
-        @media screen and (max-width: 600px) {
-            thead { display: none; } /* 隐藏表头 */
-            tbody tr { 
-                display: block; background: #fff; border-radius: 12px; 
-                padding: 12px; margin-bottom: 12px; border: 1px solid #e2e8f0;
-                position: relative;
-            }
-            tbody td { 
-                display: flex; justify-content: space-between; 
-                padding: 6px 0; border: none; font-size: 14px; text-align: left;
-            }
-            tbody td::before { 
-                content: attr(data-label); font-weight: bold; color: #64748b; 
-            }
-            /* 最后一行实发工资突出显示 */
-            tbody td:nth-last-child(2) { 
-                border-top: 1.5px dashed #e2e8f0; margin-top: 8px; padding-top: 12px;
-                font-size: 16px; color: var(--primary); font-weight: bold;
-            }
-            .btn-op-group { width: 100%; margin-top: 10px; display: flex; gap: 10px; }
-            .btn-edit, .btn-del { flex: 1; padding: 10px; border-radius: 6px; border: none; color: white; }
-            .btn-edit { background: #3b82f6; }
-            .btn-del { background: #ef4444; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            margin: 0; padding: 15px; padding-bottom: 40px;
         }
+
+        /* 顶部 App 样式 */
+        .app-header {
+            text-align: center; padding: 20px 0;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white; border-radius: 15px; margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+        }
+        .app-header h1 { margin: 0; font-size: 1.2rem; }
+        .app-header p { margin: 5px 0 0; font-size: 0.8rem; opacity: 0.8; }
+
+        /* 卡片容器 */
+        .card {
+            background: var(--card); border-radius: 12px;
+            padding: 15px; margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .title { font-size: 1rem; font-weight: 700; color: #1f2937; margin-bottom: 15px; }
+
+        /* 输入框布局：1行2个 */
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .input-full { grid-column: span 2; }
+
+        label { display: block; font-size: 0.75rem; color: #6b7280; margin-bottom: 4px; padding-left: 4px; }
+        input {
+            width: 100%; padding: 12px; border: 1px solid #d1d5db;
+            border-radius: 8px; font-size: 16px; outline: none; background: #fff;
+        }
+        input:focus { border-color: var(--primary); background: #fefeff; }
+
+        /* 底部预览条 */
+        .preview-box {
+            background: #eff6ff; border: 1.5px solid #bfdbfe;
+            border-radius: 10px; padding: 15px; text-align: center;
+            margin: 15px 0;
+        }
+        .preview-box span { font-size: 0.9rem; color: #1e40af; }
+        .preview-box strong { display: block; font-size: 1.6rem; color: var(--primary); }
+
+        /* 按钮组 */
+        .btn-group { display: flex; flex-direction: column; gap: 10px; }
+        button {
+            padding: 15px; border: none; border-radius: 10px;
+            font-size: 1rem; font-weight: bold; color: white; transition: 0.1s;
+        }
+        button:active { opacity: 0.8; transform: scale(0.98); }
+        .btn-add { background: var(--primary); }
+        .btn-export { background: var(--success); }
+
+        /* 工资条清单 */
+        .salary-item {
+            border: 1px solid #e5e7eb; border-radius: 10px;
+            padding: 12px; margin-bottom: 12px; background: #fff;
+        }
+        .item-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.85rem; }
+        .item-label { color: #6b7280; }
+        .item-val { color: #111827; font-weight: 500; }
+        .item-total { 
+            margin-top: 8px; padding-top: 8px; border-top: 1px dashed #e5e7eb;
+            color: var(--primary); font-weight: bold; font-size: 1rem;
+        }
+        
+        .item-ops { display: flex; gap: 10px; margin-top: 10px; }
+        .btn-mini { flex: 1; padding: 8px; font-size: 0.8rem; border-radius: 6px; text-align: center; text-decoration: none; font-weight: bold; }
+        .edit-op { background: #dbeafe; color: #1e40af; }
+        .del-op { background: #fee2e2; color: #b91c1c; }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="salary-date-header">
-        <h1 id="titleMain">薪资管理系统</h1>
-        <p id="titleSub">结算周期：加载中...</p>
+<div class="app-header">
+    <h1 id="titleMain">薪资核算App</h1>
+    <p id="titleSub">载入中...</p>
+</div>
+
+<div class="card">
+    <div class="title">数据录入</div>
+    <div class="input-grid">
+        <div class="input-full">
+            <label>员工姓名</label>
+            <input type="text" id="name" placeholder="点此输入姓名" list="names">
+            <datalist id="names"><option value="田忠洋"><option value="陆娇宁"><option value="何春华"></datalist>
+        </div>
+        <div><label>工时</label><input type="number" id="hours" value="0"></div>
+        <div><label>底薪</label><input type="number" id="base" value="2550"></div>
+        <div><label>全勤</label><input type="number" id="attendance" value="340"></div>
+        <div><label>绩效</label><input type="number" id="performance" value="850"></div>
+        <div><label>加班费</label><input type="number" id="overtime" value="0"></div>
+        <div><label>提成</label><input type="number" id="commission" value="0"></div>
+        <div><label>饭补</label><input type="number" id="meal" value="0"></div>
+        <div><label>三倍工资</label><input type="number" id="triple" value="0"></div>
+        <div><label>保险</label><input type="number" id="insurance" value="600"></div>
+        <div><label>差评扣款</label><input type="number" id="bad" value="0"></div>
+        <div><label>督导扣款</label><input type="number" id="super" value="0"></div>
     </div>
 
-    <div class="card">
-        <div class="section-title">薪资录入</div>
-        <div class="form-grid">
-            <div class="form-group full-width"><label>员工姓名</label><input type="text" id="name" list="names" placeholder="输入姓名"><datalist id="names"><option value="田忠洋"><option value="陆娇宁"><option value="何春华"></datalist></div>
-            <div class="form-group"><label>工时</label><input type="number" id="hours" value="0"></div>
-            <div class="form-group"><label>底薪</label><input type="number" id="base" value="2550"></div>
-            <div class="form-group"><label>全勤</label><input type="number" id="attendance" value="340"></div>
-            <div class="form-group"><label>绩效</label><input type="number" id="performance" value="850"></div>
-            <div class="form-group"><label>加班费</label><input type="number" id="overtime" value="0"></div>
-            <div class="form-group"><label>提成</label><input type="number" id="commission" value="0"></div>
-            <div class="form-group"><label>饭补</label><input type="number" id="meal" value="0"></div>
-            <div class="form-group"><label>三倍</label><input type="number" id="triple" value="0"></div>
-            <div class="form-group"><label>保险</label><input type="number" id="insurance" value="600"></div>
-            <div class="form-group"><label>差评扣款</label><input type="number" id="bad" value="0"></div>
-            <div class="form-group"><label>督导扣款</label><input type="number" id="super" value="0"></div>
-        </div>
-        <div class="summary-bar" id="previewArea">实发预览：¥ 0.00</div>
-        <div class="actions">
-            <button class="btn-add" onclick="addRow()">确认添加</button>
-            <button class="btn-export" onclick="exportSideBySide()">导出表格</button>
-        </div>
+    <div class="preview-box">
+        <span>实发预览</span>
+        <strong id="previewArea">¥ 0.00</strong>
     </div>
 
-    <div class="card">
-        <div class="section-title">明细清单</div>
-        <div class="table-container">
-            <table id="mainTable">
-                <thead>
-                    <tr><th>姓名</th><th>工时</th><th>底薪</th><th>全勤</th><th>绩效</th><th>加班</th><th>提成</th><th>饭补</th><th>三倍</th><th>保险</th><th>差评</th><th>督导</th><th>实发工资</th><th>操作</th></tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
-        </div>
+    <div class="btn-group">
+        <button class="btn-add" onclick="addItem()">保存并加入清单</button>
+        <button class="btn-export" onclick="exportData()">导出横向汇总表</button>
     </div>
+</div>
+
+<div class="card">
+    <div class="title">已存清单</div>
+    <div id="salaryList">
+        </div>
 </div>
 
 <script>
     let currentPeriod = "";
-    function initDate() {
+    function init() {
         const now = new Date();
-        const curY = now.getFullYear(); const curM = now.getMonth() + 1;
-        let lastM = curM - 1; let lastY = curY;
-        if (lastM === 0) { lastM = 12; lastY = curY - 1; }
+        const m = now.getMonth() + 1;
+        const lastM = m === 1 ? 12 : m - 1;
+        const lastY = m === 1 ? now.getFullYear()-1 : now.getFullYear();
         currentPeriod = `${lastY}年${lastM}月`;
-        document.getElementById('titleMain').innerText = `${curY}年${curM}月 核算单`;
-        document.getElementById('titleSub').innerText = `核算上月工资：${currentPeriod}`;
+        document.getElementById('titleSub').innerText = `正在核算：${currentPeriod}`;
     }
 
     document.querySelectorAll('input').forEach(input => {
         input.addEventListener('input', () => {
             if(input.id === 'hours') document.getElementById('meal').value = (parseFloat(input.value)||0)*15;
-            refreshTotal();
+            calc();
         });
-        // 手机端点击自动全选，方便修改
         input.addEventListener('focus', () => input.select());
     });
 
-    function getVal(id) { return parseFloat(document.getElementById(id).value) || 0; }
-    function refreshTotal() {
-        const res = getVal('base') + getVal('attendance') + getVal('performance') + getVal('overtime') + getVal('commission') + getVal('meal') + getVal('triple') + getVal('insurance') - getVal('bad') - getVal('super');
-        document.getElementById('previewArea').innerText = `实发预览：¥ ${res.toFixed(2)}`;
+    function calc() {
+        const res = getV('base') + getV('attendance') + getV('performance') + getV('overtime') + getV('commission') + getV('meal') + getV('triple') + getV('insurance') - getV('bad') - getV('super');
+        document.getElementById('previewArea').innerText = `¥ ${res.toFixed(2)}`;
     }
+    function getV(id) { return parseFloat(document.getElementById(id).value) || 0; }
 
-    function addRow() {
+    function addItem() {
         const name = document.getElementById('name').value.trim();
-        if(!name) return alert("请输入姓名");
-        const total = (getVal('base') + getVal('attendance') + getVal('performance') + getVal('overtime') + getVal('commission') + getVal('meal') + getVal('triple') + getVal('insurance') - getVal('bad') - getVal('super')).toFixed(2);
-        const tbody = document.getElementById('tableBody');
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td data-label="姓名">${name}</td><td data-label="工时">${getVal('hours')}</td><td data-label="底薪">${getVal('base')}</td>
-            <td data-label="全勤">${getVal('attendance')}</td><td data-label="绩效">${getVal('performance')}</td><td data-label="加班">${getVal('overtime')}</td>
-            <td data-label="提成">${getVal('commission')}</td><td data-label="饭补">${getVal('meal')}</td><td data-label="三倍">${getVal('triple')}</td>
-            <td data-label="保险">${getVal('insurance')}</td><td data-label="差评">${getVal('bad')}</td><td data-label="督导">${getVal('super')}</td>
-            <td data-label="实发工资">${total}</td>
-            <td><div class="btn-op-group"><button class="btn-edit" onclick="editRow(this)">编辑</button><button class="btn-del" onclick="btnDel(this)">删除</button></div></td>
+        if(!name) return alert("写个名字吧");
+        
+        const total = (getV('base') + getV('attendance') + getV('performance') + getV('overtime') + getV('commission') + getV('meal') + getV('triple') + getV('insurance') - getV('bad') - getV('super')).toFixed(2);
+        
+        const list = document.getElementById('salaryList');
+        const div = document.createElement('div');
+        div.className = 'salary-item';
+        // 存储数据属性方便导出
+        div.dataset.values = `${name},${getV('hours')},${getV('base')},${getV('attendance')},${getV('performance')},${getV('overtime')},${getV('commission')},${getV('meal')},${getV('triple')},${getV('insurance')},${getV('bad')},${getV('super')},${total}`;
+        
+        div.innerHTML = `
+            <div class="item-row"><span class="item-label">姓名</span><span class="item-val">${name}</span></div>
+            <div class="item-row"><span class="item-label">工时</span><span class="item-val">${getV('hours')}</span></div>
+            <div class="item-row"><strong>实发工资</strong><strong class="item-total">¥ ${total}</strong></div>
+            <div class="item-ops">
+                <div class="btn-mini edit-op" onclick="editItem(this)">编辑修改</div>
+                <div class="btn-mini del-op" onclick="this.parentElement.parentElement.remove()">删除记录</div>
+            </div>
         `;
-        tbody.appendChild(tr);
-        document.getElementById('name').value = ""; refreshTotal();
+        list.appendChild(div);
+        document.getElementById('name').value = "";
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
-    function btnDel(btn) { if(confirm("确定删除？")) btn.closest('tr').remove(); }
-    function editRow(btn) {
-        const tds = btn.closest('tr').querySelectorAll('td');
+    function editItem(btn) {
+        const item = btn.parentElement.parentElement;
+        const vals = item.dataset.values.split(',');
         const ids = ['name','hours','base','attendance','performance','overtime','commission','meal','triple','insurance','bad','super'];
-        ids.forEach((id, i) => document.getElementById(id).value = tds[i].innerText.replace(/[+-\s]/g, ''));
-        btn.closest('tr').remove(); refreshTotal();
+        ids.forEach((id, i) => document.getElementById(id).value = vals[i]);
+        item.remove(); calc();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function exportSideBySide() {
-        const rows = document.querySelectorAll("#tableBody tr");
-        if(rows.length === 0) return alert("请先录入数据");
-        let csv = "\uFEFF";
+    function exportData() {
+        const items = document.querySelectorAll('.salary-item');
+        if(items.length === 0) return alert("清单还是空的");
+        
         const fields = ["项目/姓名", "总工时", "基本底薪", "全勤奖励", "绩效评分", "加班补贴", "业务提成", "伙食补贴", "三倍工资", "保险代缴", "差评扣款", "督导扣款", "实发总额"];
-        let csvLines = fields.map(field => field);
-        rows.forEach((row) => {
-            const tds = row.querySelectorAll("td");
-            fields.forEach((_, i) => csvLines[i] += `,${tds[i].innerText.replace(/[+-\s,]/g, '')}`);
+        let csvLines = fields.map(f => f);
+        
+        items.forEach(item => {
+            const vals = item.dataset.values.split(',');
+            fields.forEach((_, i) => csvLines[i] += `,${vals[i]}`);
         });
-        const blob = new Blob([csv + csvLines.join("\n")], { type: "text/csv;charset=utf-8;" });
+
+        const blob = new Blob(["\uFEFF" + csvLines.join("\n")], { type: "text/csv;charset=utf-8;" });
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        a.download = `${currentPeriod}薪资对比表.csv`;
+        a.download = `${currentPeriod}工资汇总.csv`;
         a.click();
     }
 
-    initDate();
-    refreshTotal();
+    init();
+    calc();
 </script>
 </body>
 </html>
